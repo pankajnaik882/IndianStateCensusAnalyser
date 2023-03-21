@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace IndianStateCensusAnalyserProblem
 {
-    public class StateCensusException : Exception
+    public class InvalidCSVFormatException : Exception
     {
-        public StateCensusException(string message) : base(message){ }
+        public InvalidCSVFormatException(string message) : base(message)
+        {
+        }
     }
+
 }
