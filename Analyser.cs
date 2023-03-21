@@ -7,53 +7,44 @@ using System.IO;
 
 namespace IndianStateCensusAnalyserProblem
 {
-    public class CSVStateCensus : IEnumerable<string[]>
+
+    public class CSVStateCensus
     {
-        private readonly string _filePath;
+        private readonly string csv_file = "C:\\Users\\USER\\source\\repos\\IndianStateCensusAnalyserProblem\\IndianStateCensusAnalyserProblem\\state_census.csv";
 
-        public CSVStateCensus(string filePath)
+        public CSVStateCensus(string csv_file)
         {
-            _filePath = filePath;
+            this.csv_file = csv_file;
         }
 
-        public IEnumerator<string[]> GetEnumerator()
+        public int GetRecordCount()
         {
-            using (var reader = new StreamReader("C:\\Users\\USER\\source\\repos\\IndianStateCensusAnalyserProblem\\IndianStateCensusAnalyserProblem\\state_census.csv"))
+            try
             {
-                string line;
-                while ((line = reader.ReadLine()) != null)
-                {
-                    yield return line.Split(',');
-                }
+                var csv_data = File.ReadAllLines("C:\\Users\\USER\\source\\repos\\IndianStateCensusAnalyserProblem\\IndianStateCensusAnalyserProblem\\state_census.csv").Skip(1);
+                return csv_data.Count();
             }
-        }
-
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
+            catch (FileNotFoundException)
+            {
+                throw new ArgumentException("File not found.");
+            }
         }
     }
 
     public class StateCensusAnalyser
     {
-        private readonly string _filePath;
+        private readonly string csv_file = "C:\\Users\\USER\\source\\repos\\IndianStateCensusAnalyserProblem\\IndianStateCensusAnalyserProblem\\state_census.csv";
 
-        public StateCensusAnalyser(string filePath)
+        public StateCensusAnalyser(string csv_file)
         {
-            _filePath = filePath;
+            this.csv_file = csv_file;
         }
 
-        public int GetNumberOfRows()
+        public int GetRecordCount()
         {
-            var rows = new CSVStateCensus(_filePath);
-            int count = 0;
-
-            foreach (var row in rows)
-            {
-                count++;
-            }
-
-            return count;
+            var csv_data = new CSVStateCensus("C:\\Users\\USER\\source\\repos\\IndianStateCensusAnalyserProblem\\IndianStateCensusAnalyserProblem\\state_census.csv").GetRecordCount();
+            return csv_data;
         }
     }
+
 }
