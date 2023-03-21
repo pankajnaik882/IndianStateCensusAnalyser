@@ -1,4 +1,5 @@
 ﻿using IndianStateCensusAnalyserProblem;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace IndianStateCensusAnalyserDemo
 {
@@ -6,17 +7,20 @@ namespace IndianStateCensusAnalyserDemo
     {
         public static void Main(string[] args)
         {
-            
-                try
-                {
-                    var csv_data = File.ReadAllLines("C:\\Users\\USER\\source\\repos\\IndianStateCensusAnalyserProblem\\IndianStateCensusAnalyserProblem\\state_census.csv").Skip(1);
-                    Console.WriteLine( csv_data.Count());
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine( ex.Message);
-                }
-            
+
+           // Test case file with correct data but incorrect types
+            var file = "C:\\Users\\USER\\source\\repos\\IndianStateCensusAnalyserProblem\\IndianStateCensusAnalyserProblem\\Invalidstate_census.csv";
+            try
+            {
+                var analyser = new StateCensusAnalyser(file);
+                var recordCount = analyser.GetRecordCount();
+                Console.WriteLine($"{file}: Number of records: {recordCount}");
+            }
+            catch (InvalidDataTypeException ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+
 
         }
     }
